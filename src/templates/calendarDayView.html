@@ -25,7 +25,7 @@
     </div>
   </div>
 </div>
-<div class="cal-day-box" style="padding-top:30px">
+<div class="cal-day-box" style="padding-top:30px" id="calendar">
   <div class="cal-day-panel clearfix" ng-style="{height: vm.dayViewHeight + 'px', minWidth: vm.viewWidth + 'px'}" style="border-right:0px">
 
     <mwl-calendar-hour-list
@@ -49,7 +49,7 @@
       ng-class="dayEvent.event.cssClass"
       ng-style="{
         top: dayEvent.top - 1 + 'px',
-        left: (dayEvent.event.resource.id * 150) +  vm.dayViewTimePositionOffset + 'px',
+        left: (dayEvent.event.resource * 150) +  vm.dayViewTimePositionOffset + 'px',
         height: dayEvent.height + 'px',
         width: dayEvent.width + 'px',
         backgroundColor: dayEvent.event.color.secondary,
@@ -58,7 +58,7 @@
       mwl-draggable="dayEvent.event.draggable === true"
       axis="'xy'"
       snap-grid="{y: vm.dayViewEventChunkSize || 30, x: 5}"
-      on-drag="vm.eventDragged(dayEvent.event, y / 30)"
+      on-drag="vm.eventDragged(dayEvent.event, y / 30, x)"
       on-drag-end="vm.eventDragComplete(dayEvent.event, y / 30, x / 150)"
       auto-scroll="vm.draggableAutoScroll"
       mwl-resizable="dayEvent.event.resizable === true && dayEvent.event.endsAt"

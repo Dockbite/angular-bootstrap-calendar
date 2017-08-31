@@ -10,7 +10,7 @@ angular
         color: calendarConfig.colorTypes.warning,
         startsAt: moment().startOf('month').toDate(),
         draggable: true,
-        resource: 0
+        resource: 2
       }
     ];
 
@@ -50,17 +50,20 @@ angular
     vm.calendarView = 'day';
     vm.viewDate = moment().startOf('month').toDate();
     vm.cellIsOpen = false;
-    vm.resources = [{
-        id: 1
-      }, {
-        id: 2
-      }, {
-        id: 3
-      }, {
-        id: 4
-      }];
+    // vm.resources = [{
+    //     id: 1
+    //   }, {
+    //     id: 2
+    //   }, {
+    //     id: 3
+    //   }, {
+    //     id: 4
+    //   }];
+
+    vm.resources = [1, 2, 3, 4, 5];
 
     vm.eventDropped = function(event, start, end, resource) {
+      // console.log(resource);
       var externalIndex = vm.externalEvents.indexOf(event);
       if (externalIndex > -1) {
         vm.externalEvents.splice(externalIndex, 1);

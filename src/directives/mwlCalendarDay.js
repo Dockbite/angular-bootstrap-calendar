@@ -4,7 +4,7 @@ var angular = require('angular');
 
 angular
   .module('mwl.calendar')
-  .controller('MwlCalendarDayCtrl', function($scope, moment, calendarHelper, calendarEventTitle) {
+  .controller('MwlCalendarDayCtrl', function($scope, moment, calendarHelper, calendarEventTitle, $window) {
 
     var vm = this;
 
@@ -45,8 +45,20 @@ angular
       'vm.dayViewSplit'
     ], refreshView);
 
-    vm.eventDragComplete = function(event, minuteChunksMoved) {
+    vm.eventDragComplete = function(event, minuteChunksMoved, resourceChunksMoved) {
       var minutesDiff = minuteChunksMoved * vm.dayViewSplit;
+      if (typeof vm.resources !== 'undefined') {
+        if (typeof event.resource === 'undefined') {
+          event.resource = 0;
+        }
+        var newResource = event.resource + Math.round(resourceChunksMoved);
+        if (newResource < 0) {
+          newResource = 0;
+        } else if (newResource > vm.resources.length) {
+          newResource = vm.resources.length - 1;
+        }
+      }
+
       var newStart = moment(event.startsAt).add(minutesDiff, 'minutes');
       var newEnd = moment(event.endsAt).add(minutesDiff, 'minutes');
       delete event.tempStartsAt;
@@ -54,13 +66,16 @@ angular
       vm.onEventTimesChanged({
         calendarEvent: event,
         calendarNewEventStart: newStart.toDate(),
-        calendarNewEventEnd: event.endsAt ? newEnd.toDate() : null
+        calendarNewEventEnd: event.endsAt ? newEnd.toDate() : null,
+        calendarNewResource: newResource ? newResource : 0
       });
     };
 
-    vm.eventDragged = function(event, minuteChunksMoved) {
+    vm.eventDragged = function(event, minuteChunksMoved, resourceChunksMoved) {
       var minutesDiff = minuteChunksMoved * vm.dayViewSplit;
       event.tempStartsAt = moment(event.startsAt).add(minutesDiff, 'minutes').toDate();
+      var document = typeof $window.document === 'undefined' ? '' : $window.document;
+      document.getElementById('calendar').scrollLeft = document.getElementById('calendar').scrollLeft + resourceChunksMoved / 100;
     };
 
     vm.eventResizeComplete = function(event, edge, minuteChunksMoved) {
