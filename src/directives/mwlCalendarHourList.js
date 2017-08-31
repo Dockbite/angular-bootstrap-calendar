@@ -163,6 +163,7 @@ angular
         customTemplateUrls: '=?',
         cellModifier: '=',
         templateScope: '=',
+        resources: '=',
         view: '@'
       },
       bindToController: true
