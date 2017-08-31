@@ -1,6 +1,6 @@
 /**
  * angular-bootstrap-calendar - A pure AngularJS bootstrap themed responsive calendar that can display events and has views for year, month, week and day
- * @version v0.29.3
+ * @version v0.29.4
  * @link https://github.com/mattlewis92/angular-bootstrap-calendar
  * @license MIT
  */
@@ -482,6 +482,13 @@ module.exports = startOfDay
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SECONDS_IN_DAY", function() { return SECONDS_IN_DAY; });
+/* harmony export (immutable) */ __webpack_exports__["getWeekViewEventOffset"] = getWeekViewEventOffset;
+/* harmony export (immutable) */ __webpack_exports__["getWeekViewHeader"] = getWeekViewHeader;
+/* harmony export (immutable) */ __webpack_exports__["getWeekView"] = getWeekView;
+/* harmony export (immutable) */ __webpack_exports__["getMonthView"] = getMonthView;
+/* harmony export (immutable) */ __webpack_exports__["getDayView"] = getDayView;
+/* harmony export (immutable) */ __webpack_exports__["getDayViewHourGrid"] = getDayViewHourGrid;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_date_fns_end_of_day__ = __webpack_require__(19);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_date_fns_end_of_day___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_date_fns_end_of_day__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_date_fns_add_minutes__ = __webpack_require__(12);
@@ -526,13 +533,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_20_date_fns_min___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_20_date_fns_min__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_21_date_fns_max__ = __webpack_require__(27);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_21_date_fns_max___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_21_date_fns_max__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SECONDS_IN_DAY", function() { return SECONDS_IN_DAY; });
-/* harmony export (immutable) */ __webpack_exports__["getWeekViewEventOffset"] = getWeekViewEventOffset;
-/* harmony export (immutable) */ __webpack_exports__["getWeekViewHeader"] = getWeekViewHeader;
-/* harmony export (immutable) */ __webpack_exports__["getWeekView"] = getWeekView;
-/* harmony export (immutable) */ __webpack_exports__["getMonthView"] = getMonthView;
-/* harmony export (immutable) */ __webpack_exports__["getDayView"] = getDayView;
-/* harmony export (immutable) */ __webpack_exports__["getDayViewHourGrid"] = getDayViewHourGrid;
 
 
 
@@ -2075,6 +2075,7 @@ angular
         dayViewEventChunkSize: '@',
         dayViewEventWidth: '@',
         templateScope: '=?',
+        resources: '=?',
         dayViewTimePosition: '@'
       },
       controller: 'MwlCalendarCtrl as vm',
