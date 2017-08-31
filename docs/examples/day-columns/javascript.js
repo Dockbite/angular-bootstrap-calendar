@@ -50,17 +50,19 @@ angular
     vm.calendarView = 'day';
     vm.viewDate = moment().startOf('month').toDate();
     vm.cellIsOpen = false;
-    // vm.resources = [{
-    //     id: 1
-    //   }, {
-    //     id: 2
-    //   }, {
-    //     id: 3
-    //   }, {
-    //     id: 4
-    //   }];
-
-    vm.resources = [1, 2, 3, 4, 5];
+    vm.resources = [{
+        id: 23232,
+        label: 'Resource 1'
+      }, {
+        id: 34444,
+        label: 'Resource 2'
+      }, {
+        id: 33222,
+        label: 'Resource 3'
+      }, {
+        id: 86544,
+        label: 'Resource 4'
+      }];
 
     vm.eventDropped = function(event, start, end, resource) {
       // console.log(resource);

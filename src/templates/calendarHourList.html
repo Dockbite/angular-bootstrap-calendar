@@ -1,4 +1,4 @@
-<div class="pull-left day-event day-highlight" style="text-align:center" ng-style="{ top: '-30px', height: '30px', width: '150px', left:($index*150)+60+'px'}" ng-repeat="vm in vm.resources">{{vm.id}}</div>
+<div class="pull-left day-event day-highlight" style="text-align:center" ng-style="{ top: '-30px', height: '30px', width: '150px', left:($index*150)+60+'px'}" ng-repeat="vm in vm.resources">{{vm.label}}</div>
 <div class="cal-day-panel-hour" ng-style="{width : vm.resources.length > 0 ? (vm.resources.length*150)+60+'px' : '100%'}" >
 
   <div class="cal-day-hour" ng-repeat="hour in vm.hourGrid track by $index">
