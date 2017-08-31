@@ -76,4 +76,7 @@
 }, {
   "key": "disable-tooltips",
   "label": "Disable tooltips"
+}, {
+  "key": "day-columns",
+  "label": "Columns in day view"
 }]
