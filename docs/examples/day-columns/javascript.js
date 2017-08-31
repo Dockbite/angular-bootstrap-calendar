@@ -10,7 +10,7 @@ angular
         color: calendarConfig.colorTypes.warning,
         startsAt: moment().startOf('month').toDate(),
         draggable: true,
-        recourse: 0
+        resource: 0
       }
     ];
 
@@ -21,7 +21,7 @@ angular
         color: calendarConfig.colorTypes.warning,
         startsAt: moment().startOf('month').toDate(),
         draggable: true,
-        recourse: 0
+        resource: 0
       },
       {
         title: 'Event 2',
@@ -29,7 +29,7 @@ angular
         color: calendarConfig.colorTypes.important,
         startsAt: moment().startOf('month').toDate(),
         draggable: true,
-        recourse: 0
+        resource: 0
       },
       {
         title: 'Event 3',
@@ -50,7 +50,7 @@ angular
     vm.calendarView = 'day';
     vm.viewDate = moment().startOf('month').toDate();
     vm.cellIsOpen = false;
-    vm.recourses = [{
+    vm.resources = [{
         id: 1
       }, {
         id: 2
@@ -60,7 +60,7 @@ angular
         id: 4
       }];
 
-    vm.eventDropped = function(event, start, end, recourse) {
+    vm.eventDropped = function(event, start, end, resource) {
       var externalIndex = vm.externalEvents.indexOf(event);
       if (externalIndex > -1) {
         vm.externalEvents.splice(externalIndex, 1);
@@ -70,7 +70,7 @@ angular
       if (end) {
         event.endsAt = end;
       }
-      event.recourse = recourse;
+      event.resource = resource;
       vm.viewDate = start;
       vm.cellIsOpen = true;
     };
