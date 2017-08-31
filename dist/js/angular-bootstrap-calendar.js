@@ -2202,6 +2202,7 @@ angular
         customTemplateUrls: '=?',
         cellModifier: '=',
         templateScope: '=',
+        resources: '=',
         dayViewTimePosition: '=',
         draggableAutoScroll: '='
       },
