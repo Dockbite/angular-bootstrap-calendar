@@ -4,7 +4,7 @@ var angular = require('angular');
 
 angular
   .module('mwl.calendar')
-  .controller('MwlCalendarDayCtrl', function($scope, moment, calendarHelper, calendarEventTitle, $window) {
+  .controller('MwlCalendarDayCtrl', function($scope, moment, calendarHelper, calendarEventTitle) {
 
     var vm = this;
 
@@ -46,6 +46,7 @@ angular
     ], refreshView);
 
     vm.eventDragComplete = function(event, minuteChunksMoved, resourceChunksMoved) {
+
       var minutesDiff = minuteChunksMoved * vm.dayViewSplit;
       if (typeof vm.resources !== 'undefined') {
         if (typeof event.resource === 'undefined') {
@@ -67,16 +68,21 @@ angular
         calendarEvent: event,
         calendarNewEventStart: newStart.toDate(),
         calendarNewEventEnd: event.endsAt ? newEnd.toDate() : null,
-        calendarNewResource: newResource ? newResource : 0
+        calendarNewResource: newResource ? newResource : null
       });
     };
 
-    vm.eventDragged = function(event, minuteChunksMoved, resourceChunksMoved) {
+    vm.eventDragged = function(event, minuteChunksMoved) {
+      var minutesDiff = minuteChunksMoved * vm.dayViewSplit;
+      event.tempStartsAt = moment(event.startsAt).add(minutesDiff, 'minutes').toDate();
+    };
+
+    /*vm.eventDragged = function(event, minuteChunksMoved, resourceChunksMoved) {
       var minutesDiff = minuteChunksMoved * vm.dayViewSplit;
       event.tempStartsAt = moment(event.startsAt).add(minutesDiff, 'minutes').toDate();
       var document = typeof $window.document === 'undefined' ? '' : $window.document;
       document.getElementById('calendar').scrollLeft = document.getElementById('calendar').scrollLeft + resourceChunksMoved / 100;
-    };
+    };*/
 
     vm.eventResizeComplete = function(event, edge, minuteChunksMoved) {
       var minutesDiff = minuteChunksMoved * vm.dayViewSplit;
@@ -99,7 +105,7 @@ angular
         calendarEvent: event,
         calendarNewEventStart: start.toDate(),
         calendarNewEventEnd: end.toDate(),
-        calendarNewResource: event.resource ? event.resource : 0
+        calendarNewResource: event.resource ? event.resource : null
       });
     };
 
