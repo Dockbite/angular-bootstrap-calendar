@@ -17,12 +17,13 @@
       </div>
     </div>
     <div class="col-md-9">
-      <ng-include src="'calendarControls.html'"></ng-include>
       <mwl-calendar
         events="vm.events"
         resources="vm.resources"
         view="vm.calendarView"
         view-date="vm.viewDate"
+        view-date-range-start="vm.viewDateStart"
+        view-date-range-end="vm.viewDateEnd"
         cell-is-open="vm.cellIsOpen"
         cell-auto-open-disabled="true"
         on-event-times-changed="vm.eventDropped(calendarEvent, calendarNewEventStart, calendarNewEventEnd, calendarNewResource)">

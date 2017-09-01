@@ -11,6 +11,20 @@ angular
         startsAt: moment().startOf('month').toDate(),
         draggable: true,
         resource: 2
+      },
+      {
+        title: 'Draggable event 2',
+        color: calendarConfig.colorTypes.warning,
+        startsAt: moment().startOf('month').add(2, 'days').toDate(),
+        draggable: true,
+        resource: 1
+      },
+      {
+        title: 'Draggable event 3',
+        color: calendarConfig.colorTypes.warning,
+        startsAt: moment().startOf('month').add(1, 'days').toDate(),
+        draggable: true,
+        resource: 3
       }
     ];
 
@@ -51,8 +65,10 @@ angular
       }
     ];
 
-    vm.calendarView = 'day';
+    vm.calendarView = 'day-range';
     vm.viewDate = moment().startOf('month').toDate();
+    vm.viewDateStart = moment().startOf('month').toDate();
+    vm.viewDateEnd =  moment().startOf('month').add(4, 'days').toDate();
     vm.cellIsOpen = false;
     vm.resources = [{
         id: 23232,
@@ -85,7 +101,6 @@ angular
           event.endsAt = end;
         }
         event.resource = resource;
-        vm.viewDate = start;
         vm.cellIsOpen = true;
       }
     };
