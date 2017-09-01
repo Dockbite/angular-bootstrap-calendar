@@ -81,4 +81,31 @@
     }"
     ng-switch-when="day">
   </mwl-calendar-day>
+
+  <mwl-calendar-day-range
+    events="vm.events"
+    view-date="vm.viewDate"
+    view-date-range-start="vm.viewDateRangeStart"
+    view-date-range-end="vm.viewDateRangeEnd"
+    on-event-click="vm.onEventClick"
+    on-event-times-changed="vm.onEventTimesChanged"
+    on-timespan-click="vm.onTimespanClick"
+    on-date-range-select="vm.onDateRangeSelect"
+    day-view-start="vm.dayViewStart"
+    day-view-end="vm.dayViewEnd"
+    day-view-split="vm.dayViewSplit"
+    day-view-event-chunk-size="vm.dayViewEventChunkSize"
+    day-view-event-width="vm.dayViewEventWidth"
+    custom-template-urls="vm.customTemplateUrls"
+    cell-modifier="vm.cellModifier"
+    template-scope="vm.templateScope"
+    resources="vm.resources"
+    day-view-time-position="vm.dayViewTimePosition || 'default'"
+    draggable-auto-scroll="vm.draggableAutoScroll"
+    ng-class="{
+      'time-on-side' : vm.dayViewTimePosition === 'side',
+      'time-hidden' : vm.dayViewTimePosition === 'hidden'
+    }"
+    ng-switch-when="day-range">
+  </mwl-calendar-day-range>
 </div>

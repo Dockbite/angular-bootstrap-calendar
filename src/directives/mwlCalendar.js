@@ -135,6 +135,8 @@ angular
         view: '=',
         viewTitle: '=?',
         viewDate: '=',
+        viewDateRangeStart: '=?',
+        viewDateRangeEnd: '=?',
         cellIsOpen: '=?',
         cellAutoOpenDisabled: '=?',
         slideBoxDisabled: '=?',
