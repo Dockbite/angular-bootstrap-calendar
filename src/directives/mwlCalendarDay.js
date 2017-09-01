@@ -82,6 +82,12 @@ angular
       var minutesDiff = minuteChunksMoved * vm.dayViewSplit;
       var start = moment(event.startsAt);
       var end = moment(event.endsAt);
+
+      // set end if event.endsAt is undefined
+      if (!event.endsAt) {
+        end = moment(event.startsAt).add(30, 'minutes');
+      }
+
       if (edge === 'start') {
         start.add(minutesDiff, 'minutes');
       } else {
@@ -92,7 +98,8 @@ angular
       vm.onEventTimesChanged({
         calendarEvent: event,
         calendarNewEventStart: start.toDate(),
-        calendarNewEventEnd: end.toDate()
+        calendarNewEventEnd: end.toDate(),
+        calendarNewResource: event.resource ? event.resource : 0
       });
     };
 

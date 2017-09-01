@@ -23,8 +23,19 @@
       <div class="cal-day-hour-part-time">
         <strong ng-bind="segment.date | calendarDate:'hour':true" ng-show="segment.isStart"></strong>
       </div>
+
+      <table ng-show="vm.resources.length > 0">
+        <tr>
+          <td class="pull-left day-event" ng-style="{ height: '30px', width:'150px', left:($index*150)+61.5+'px'}" style="border-right:1.5px solid #c3c3c3" ng-repeat="hour in vm.resources">
+            <div class="cal-day-hour-part-time">
+              <strong ng-bind="segment.date | calendarDate:'hour':true" ng-if="segment.isStart && ($index + 1) % 6 == 0 && $index != 0" style="color:#ddd"></strong>
+            </div>
+          </td>
+        </tr>
+      </table>
     </div>
 
+    
     <div
       class="cal-day-hour-part"
       ng-repeat="segment in hour.segments track by $index"
