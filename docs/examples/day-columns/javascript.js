@@ -21,6 +21,7 @@ angular
         color: calendarConfig.colorTypes.warning,
         startsAt: moment().startOf('month').toDate(),
         draggable: true,
+        resizable: true,
         resource: 0
       },
       {
@@ -29,6 +30,7 @@ angular
         color: calendarConfig.colorTypes.important,
         startsAt: moment().startOf('month').toDate(),
         draggable: true,
+        resizable: true,
         resource: 0
       },
       {
@@ -36,14 +38,16 @@ angular
         type: 'danger',
         color: calendarConfig.colorTypes.important,
         startsAt: moment().startOf('month').toDate(),
-        draggable: true
+        draggable: true,
+        resizable: true
       },
       {
         title: 'Event 4',
         type: 'danger',
         color: calendarConfig.colorTypes.important,
         startsAt: moment().startOf('month').toDate(),
-        draggable: true
+        draggable: true,
+        resizable: true
       }
     ];
 
@@ -65,19 +69,25 @@ angular
       }];
 
     vm.eventDropped = function(event, start, end, resource) {
-      // console.log(resource);
       var externalIndex = vm.externalEvents.indexOf(event);
       if (externalIndex > -1) {
         vm.externalEvents.splice(externalIndex, 1);
         vm.events.push(event);
       }
-      event.startsAt = start;
-      if (end) {
-        event.endsAt = end;
+
+      var validStartDate = moment(event.startsAt).startOf('day');
+      var validEndDate   = moment(event.startsAt).endOf('day');
+
+      // 
+      if (moment(start).isBetween(validStartDate, validEndDate)) {
+        event.startsAt = start;
+        if (end) {
+          event.endsAt = end;
+        }
+        event.resource = resource;
+        vm.viewDate = start;
+        vm.cellIsOpen = true;
       }
-      event.resource = resource;
-      vm.viewDate = start;
-      vm.cellIsOpen = true;
     };
 
   });
