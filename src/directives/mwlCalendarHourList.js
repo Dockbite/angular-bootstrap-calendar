@@ -165,7 +165,6 @@ angular
         cellModifier: '=',
         templateScope: '=',
         resources: '=',
-        resource: '=',
         view: '@'
       },
       bindToController: true

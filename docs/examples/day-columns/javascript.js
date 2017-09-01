@@ -92,11 +92,6 @@ angular
 
     vm.eventDropped = function(event, start, end, resource) {
 
-      console.log(event);
-      console.log(start);
-      console.log(end);
-      console.log(resource);
-
       // console.log(resource);
       var externalIndex = vm.externalEvents.indexOf(event);
       if (externalIndex > -1) {
