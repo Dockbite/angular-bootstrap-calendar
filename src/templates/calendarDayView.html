@@ -1,3 +1,4 @@
+{{vm.viewDate}}<br>
 <div class="cal-week-box cal-all-day-events-box" ng-if="vm.allDayEvents.length > 0">
   <div class="cal-day-panel clearfix">
     <div class="row">
@@ -27,8 +28,8 @@
 </div>
 <div class="cal-day-box" style="padding-top:30px" id="calendar">
   <div class="cal-day-panel clearfix" ng-style="{height: vm.dayViewHeight + 'px', minWidth: vm.viewWidth + 'px'}" style="border-right:0px">
-
     <mwl-calendar-hour-list
+
       day-view-start="vm.dayViewStart"
       day-view-end="vm.dayViewEnd"
       day-view-split="vm.dayViewSplit"
@@ -39,6 +40,7 @@
       custom-template-urls="vm.customTemplateUrls"
       template-scope="vm.templateScope"
       resources="vm.resources"
+      resource="2"
       cell-modifier="vm.cellModifier"
       view="day">
     </mwl-calendar-hour-list>
