@@ -4,6 +4,11 @@ angular
 
     var vm = this;
 
+    vm.droppedItem = function(asdf) {
+      console.log("dropped some shizz");
+      console.log(asdf);
+    }
+
     vm.events = [
       {
         title: 'Draggable event',
