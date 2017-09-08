@@ -29,6 +29,7 @@
         borderColor: dayEvent.event.color.primary
       }"
       mwl-draggable="dayEvent.event.draggable === true"
+      drop-data="{event: dayEvent.event}"
       axis="'xy'"
       snap-grid="{y: vm.dayViewEventChunkSize || 30, x: 5}"
       on-drag="vm.eventDragged(dayEvent.event, y / 30, x)"

@@ -9,6 +9,21 @@ angular
       console.log(asdf);
     }
 
+    vm.eventDroppedInList = function(event) {
+      console.log("dropped something");
+      console.log(event);
+      var internalIndex = vm.events.indexOf(event);
+      console.log(internalIndex);
+      if (internalIndex > -1) {
+        console.log(vm.events);
+        vm.events.splice(internalIndex, 1);
+        console.log(vm.events);
+        console.log(vm.externalEvents.length);
+        vm.externalEvents.push(event);
+        console.log(vm.externalEvents.length);
+      }
+    }
+
     vm.events = [
       {
         title: 'Draggable event',
@@ -95,11 +110,11 @@ angular
         label: 'Resource 4'
       }];
 
-    vm.eventDropped = function(event, start, end, resource) {
+    vm.eventDropped = function(event, start, end, resource, fromCalendar) {
 
       // console.log(resource);
       var externalIndex = vm.externalEvents.indexOf(event);
-      if (externalIndex > -1) {
+      if (externalIndex > -1 && fromCalendar !== true) {
         vm.externalEvents.splice(externalIndex, 1);
         vm.events.push(event);
       }
