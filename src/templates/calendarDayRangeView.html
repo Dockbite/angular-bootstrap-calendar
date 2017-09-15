@@ -1,41 +1,14 @@
-<div class="cal-week-box cal-all-day-events-box" ng-if="vm.allDayEvents.length > 0">
-  <div class="cal-day-panel clearfix">
-    <div class="row">
-      <div class="col-xs-12">
-        <div class="cal-row-fluid">
-          <div
-            class="cal-cell-6 day-highlight"
-            ng-style="{backgroundColor: event.color.secondary}"
-            data-event-class
-            ng-repeat="event in vm.allDayEvents track by event.calendarEventId">
-            <strong>
-              <span ng-bind="event.startsAt | calendarDate:'datetime':true"></span>
-              <span ng-if="event.endsAt">
-                - <span ng-bind="event.endsAt | calendarDate:'datetime':true"></span>
-              </span>
-            </strong>
-            <a
-              href="javascript:;"
-              class="event-item"
-              ng-bind-html="vm.calendarEventTitle.dayView(event) | calendarTrustAsHtml">
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-<div class="cal-day-box" style="padding-top:30px" id="calendar">
+<div class="cal-day-box" style="padding-top:30px" id="calendar" ng-repeat="date in vm.dateRange track by $index">
   <div class="cal-day-panel clearfix" ng-style="{height: vm.dayViewHeight + 'px', minWidth: vm.viewWidth + 'px'}" style="border-right:0px">
-    <mwl-calendar-hour-list
 
+    <mwl-calendar-hour-list
       day-view-start="vm.dayViewStart"
       day-view-end="vm.dayViewEnd"
       day-view-split="vm.dayViewSplit"
       on-timespan-click="vm.onTimespanClick"
       on-date-range-select="vm.onDateRangeSelect"
       on-event-times-changed="vm.onEventTimesChanged"
-      view-date="vm.viewDate"
+      view-date="date"
       custom-template-urls="vm.customTemplateUrls"
       template-scope="vm.templateScope"
       resources="vm.resources"
@@ -45,7 +18,7 @@
 
     <div
       class="pull-left day-event day-highlight"
-      ng-repeat="dayEvent in vm.nonAllDayEvents track by dayEvent.event.calendarEventId"
+      ng-repeat="dayEvent in vm.nonAllDayEvents[$index] track by dayEvent.event.calendarEventId"
       ng-class="dayEvent.event.cssClass"
       ng-style="{
         top: dayEvent.top - 1 + 'px',
@@ -56,6 +29,7 @@
         borderColor: dayEvent.event.color.primary
       }"
       mwl-draggable="dayEvent.event.draggable === true"
+      drop-data="{event: dayEvent.event}"
       axis="'xy'"
       snap-grid="{y: vm.dayViewEventChunkSize || 30, x: 5}"
       on-drag="vm.eventDragged(dayEvent.event, y / 30, x)"
@@ -70,7 +44,7 @@
 
       <span class="cal-hours">
         <span ng-show="dayEvent.top == 0"><span ng-bind="(dayEvent.event.tempStartsAt || dayEvent.event.startsAt) | calendarDate:'day':true"></span>, </span>
-        <span ng-bind="(dayEvent.event.tempStartsAt || dayEvent.event.startsAt) | calendarDate:'time':true"></span>
+        <span ng-hide="dayEvent.event.outsideDay" ng-bind="(dayEvent.event.tempStartsAt || dayEvent.event.startsAt) | calendarDate:'time':true"></span>
       </span>
       <a
         href="javascript:;"
@@ -93,3 +67,4 @@
   </div>
 
 </div>
+  

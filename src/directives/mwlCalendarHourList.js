@@ -102,7 +102,7 @@ angular
       updateDays();
     });
 
-    vm.eventDropped = function(event, date) {
+    vm.eventDropped = function(event, date, resource) {
       var newStart = moment(date);
       var newEnd = calendarHelper.adjustEndDateFromStartDiff(event.startsAt, newStart, event.endsAt);
 
@@ -110,7 +110,8 @@ angular
         calendarEvent: event,
         calendarDate: date,
         calendarNewEventStart: newStart.toDate(),
-        calendarNewEventEnd: newEnd ? newEnd.toDate() : null
+        calendarNewEventEnd: newEnd ? newEnd.toDate() : null,
+        calendarNewResource: resource
       });
     };
 

@@ -4,10 +4,9 @@ var angular = require('angular');
 
 angular
   .module('mwl.calendar')
-  .controller('MwlCalendarDayCtrl', function($scope, moment, calendarHelper, calendarEventTitle) {
+  .controller('MwlCalendarDayRangeCtrl', function($scope, moment, calendarHelper, calendarEventTitle, $window) {
 
     var vm = this;
-
     vm.calendarEventTitle = calendarEventTitle;
 
     function refreshView() {
@@ -22,19 +21,29 @@ angular
         vm.dayViewSplit
       );
 
-      var view = calendarHelper.getDayView(
-        vm.events,
-        vm.viewDate,
-        vm.dayViewStart,
-        vm.dayViewEnd,
-        vm.dayViewSplit,
-        vm.dayViewEventWidth
-      );
+      vm.dateRange = [];
+      var startDate = moment(vm.viewDateRangeStart);
+      var stopDate = moment(vm.viewDateRangeEnd);
+      while (startDate <= stopDate) {
+        vm.dateRange.push(moment(startDate).format('YYYY-MM-DD'));
+        startDate = moment(startDate).add(1, 'days');
+      }
 
-      vm.allDayEvents = view.allDayEvents;
-      vm.nonAllDayEvents = view.events;
-      vm.viewWidth = view.width + 62;
-
+      var view = [];
+      vm.nonAllDayEvents = [];
+      vm.dateRange.forEach(function(day, index) {
+        view[index] = calendarHelper.getDayView(
+          vm.events,
+          day,
+          vm.dayViewStart,
+          vm.dayViewEnd,
+          vm.dayViewSplit,
+          vm.dayViewEventWidth
+        );
+  
+        vm.nonAllDayEvents[index] = view[index].events;
+        vm.viewWidth = view[index].width + 62;
+      });
     }
 
     $scope.$on('calendar.refreshView', refreshView);
@@ -46,7 +55,6 @@ angular
     ], refreshView);
 
     vm.eventDragComplete = function(event, minuteChunksMoved, resourceChunksMoved) {
-
       var minutesDiff = minuteChunksMoved * vm.dayViewSplit;
       if (typeof vm.resources !== 'undefined') {
         if (typeof event.resource === 'undefined') {
@@ -63,26 +71,31 @@ angular
       var newStart = moment(event.startsAt).add(minutesDiff, 'minutes');
       var newEnd = moment(event.endsAt).add(minutesDiff, 'minutes');
       delete event.tempStartsAt;
+      delete event.outsideDay;
 
       vm.onEventTimesChanged({
         calendarEvent: event,
         calendarNewEventStart: newStart.toDate(),
         calendarNewEventEnd: event.endsAt ? newEnd.toDate() : null,
-        calendarNewResource: newResource ? newResource : null
+        calendarNewResource: newResource ? newResource : 0,
+        fromCalendar: true
       });
     };
 
-    vm.eventDragged = function(event, minuteChunksMoved) {
+    vm.eventDragged = function(event, minuteChunksMoved, resourceChunksMoved) {
       var minutesDiff = minuteChunksMoved * vm.dayViewSplit;
-      event.tempStartsAt = moment(event.startsAt).add(minutesDiff, 'minutes').toDate();
-    };
-
-    /*vm.eventDragged = function(event, minuteChunksMoved, resourceChunksMoved) {
-      var minutesDiff = minuteChunksMoved * vm.dayViewSplit;
-      event.tempStartsAt = moment(event.startsAt).add(minutesDiff, 'minutes').toDate();
+      var tempstart = moment(event.startsAt).add(minutesDiff, 'minutes');
+      if (!tempstart.isBetween(moment(event.startsAt).hour(moment(vm.dayViewStart, 'HH:mm').hour()).minute(moment(vm.dayViewStart, 'HH:mm').minute()),
+        moment(event.startsAt).hour(moment(vm.dayViewEnd, 'HH:mm').hour()).minute(moment(vm.dayViewEnd, 'HH:mm').minute()))) {
+          /* within start and end of this day, to hide the time when it goes outside those bounds */
+        event.outsideDay = true;
+      } else {
+        event.outsideDay = false;
+      }
+      event.tempStartsAt = tempstart.toDate();
       var document = typeof $window.document === 'undefined' ? '' : $window.document;
       document.getElementById('calendar').scrollLeft = document.getElementById('calendar').scrollLeft + resourceChunksMoved / 100;
-    };*/
+    };
 
     vm.eventResizeComplete = function(event, edge, minuteChunksMoved) {
       var minutesDiff = minuteChunksMoved * vm.dayViewSplit;
@@ -105,7 +118,8 @@ angular
         calendarEvent: event,
         calendarNewEventStart: start.toDate(),
         calendarNewEventEnd: end.toDate(),
-        calendarNewResource: event.resource ? event.resource : null
+        calendarNewResource: event.resource ? event.resource : 0,
+        fromCalendar: true
       });
     };
 
@@ -117,15 +131,17 @@ angular
     };
 
   })
-  .directive('mwlCalendarDay', function() {
+  .directive('mwlCalendarDayRange', function() {
 
     return {
-      template: '<div mwl-dynamic-directive-template name="calendarDayView" overrides="vm.customTemplateUrls"></div>',
+      template: '<div mwl-dynamic-directive-template name="calendarDayRangeView" overrides="vm.customTemplateUrls"></div>',
       restrict: 'E',
       require: '^mwlCalendar',
       scope: {
         events: '=',
         viewDate: '=',
+        viewDateRangeStart: '=',
+        viewDateRangeEnd: '=',
         onEventClick: '=',
         onEventTimesChanged: '=',
         onTimespanClick: '=',
@@ -142,7 +158,7 @@ angular
         dayViewTimePosition: '=',
         draggableAutoScroll: '='
       },
-      controller: 'MwlCalendarDayCtrl as vm',
+      controller: 'MwlCalendarDayRangeCtrl as vm',
       bindToController: true
     };
 
