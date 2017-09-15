@@ -101,12 +101,9 @@ angular
       }];
 
     vm.eventDropped = function(event, start, end, resource, fromCalendar) {
-      // console.log(start);
-      // console.log(event.startsAt);
 
-      console.log(vm.dayViewStart);
-
-      if(!fromCalendar && vm.events.indexOf(event) > -1) {
+      if(!fromCalendar && vm.events.indexOf(event) > -1
+          && moment(start).isBetween(moment(event.startsAt).startOf('day'), moment(event.startsAt).endOf('day'))) {
         /* This is a check to prevent double dropping, which causes
             the events to be randomly placed wrongly */
         return;
