@@ -109,7 +109,8 @@ angular
         calendarEvent: event,
         calendarNewEventStart: start.toDate(),
         calendarNewEventEnd: end.toDate(),
-        calendarNewResource: event.resource ? event.resource : 0
+        calendarNewResource: event.resource ? event.resource : 0,
+        fromCalendar: true
       });
     };
 
