@@ -4,23 +4,11 @@ angular
 
     var vm = this;
 
-    vm.droppedItem = function(asdf) {
-      console.log("dropped some shizz");
-      console.log(asdf);
-    }
-
     vm.eventDroppedInList = function(event) {
-      console.log("dropped something");
-      console.log(event);
       var internalIndex = vm.events.indexOf(event);
-      console.log(internalIndex);
       if (internalIndex > -1) {
-        console.log(vm.events);
         vm.events.splice(internalIndex, 1);
-        console.log(vm.events);
-        console.log(vm.externalEvents.length);
         vm.externalEvents.push(event);
-        console.log(vm.externalEvents.length);
       }
     }
 
@@ -111,8 +99,12 @@ angular
       }];
 
     vm.eventDropped = function(event, start, end, resource, fromCalendar) {
+      if(!fromCalendar && vm.events.indexOf(event) > -1) {
+        /* This is a check to prevent double dropping, which causes
+            the events to be randomly placed wrongly */
+        return;
+      }
 
-      // console.log(resource);
       var externalIndex = vm.externalEvents.indexOf(event);
       if (externalIndex > -1 && fromCalendar !== true) {
         vm.externalEvents.splice(externalIndex, 1);

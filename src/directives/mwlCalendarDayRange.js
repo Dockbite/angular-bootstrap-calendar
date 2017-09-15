@@ -72,9 +72,6 @@ angular
       var newEnd = moment(event.endsAt).add(minutesDiff, 'minutes');
       delete event.tempStartsAt;
 
-      console.log(newStart);
-      console.log(newEnd);
-
       vm.onEventTimesChanged({
         calendarEvent: event,
         calendarNewEventStart: newStart.toDate(),
