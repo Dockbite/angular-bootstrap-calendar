@@ -79,6 +79,8 @@ angular
     vm.viewDate = moment().startOf('month').toDate();
     vm.viewDateStart = moment().startOf('month').toDate();
     vm.viewDateEnd =  moment().startOf('month').add(4, 'days').toDate();
+    vm.dayViewStart = "09:00";
+    vm.dayViewEnd = "14:00";
     vm.cellIsOpen = false;
     vm.resources = [{
         id: 0,
@@ -99,6 +101,11 @@ angular
       }];
 
     vm.eventDropped = function(event, start, end, resource, fromCalendar) {
+      // console.log(start);
+      // console.log(event.startsAt);
+
+      console.log(vm.dayViewStart);
+
       if(!fromCalendar && vm.events.indexOf(event) > -1) {
         /* This is a check to prevent double dropping, which causes
             the events to be randomly placed wrongly */
@@ -117,17 +124,22 @@ angular
         vm.externalEvents.push(event);
       }
 
-      var validStartDate = moment(event.startsAt).startOf('day');
-      var validEndDate = moment(event.startsAt).endOf('day');
+      /* Check if: day in day range and time within dayViewStart and dayViewEnd */
+      if(moment(start).isBetween(moment(vm.viewDateStart).startOf('day'), moment(vm.viewDateEnd).endOf('day'))) {
+        dayStart = moment(vm.dayViewStart, 'HH:mm');
+        dayEnd = moment(vm.dayViewEnd, 'HH:mm');
 
-      //
-      if (moment(start).isBetween(validStartDate, validEndDate)) {
-        event.startsAt = start;
-        if (end) {
-          event.endsAt = end;
+        if(moment(start).isBetween(moment(start).hour(dayStart.hour()).minute(dayStart.minute()),
+            moment(start).hour(dayEnd.hour()).minute(dayEnd.minute()))) {
+          /* valid */
+          event.startsAt = start;
+          if (end) {
+            event.endsAt = end;
+          }
+          event.resource = resource;
+          vm.cellIsOpen = true;
+
         }
-        event.resource = resource;
-        vm.cellIsOpen = true;
       }
     };
 
