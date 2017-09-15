@@ -71,6 +71,7 @@ angular
       var newStart = moment(event.startsAt).add(minutesDiff, 'minutes');
       var newEnd = moment(event.endsAt).add(minutesDiff, 'minutes');
       delete event.tempStartsAt;
+      delete event.outsideDay;
 
       vm.onEventTimesChanged({
         calendarEvent: event,
@@ -83,7 +84,15 @@ angular
 
     vm.eventDragged = function(event, minuteChunksMoved, resourceChunksMoved) {
       var minutesDiff = minuteChunksMoved * vm.dayViewSplit;
-      event.tempStartsAt = moment(event.startsAt).add(minutesDiff, 'minutes').toDate();
+      var tempstart = moment(event.startsAt).add(minutesDiff, 'minutes');
+      if (!tempstart.isBetween(moment(event.startsAt).hour(moment(vm.dayViewStart, 'HH:mm').hour()).minute(moment(vm.dayViewStart, 'HH:mm').minute()),
+        moment(event.startsAt).hour(moment(vm.dayViewEnd, 'HH:mm').hour()).minute(moment(vm.dayViewEnd, 'HH:mm').minute()))) {
+          /* within start and end of this day, to hide the time when it goes outside those bounds */
+        event.outsideDay = true;
+      } else {
+        event.outsideDay = false;
+      }
+      event.tempStartsAt = tempstart.toDate();
       var document = typeof $window.document === 'undefined' ? '' : $window.document;
       document.getElementById('calendar').scrollLeft = document.getElementById('calendar').scrollLeft + resourceChunksMoved / 100;
     };
