@@ -100,6 +100,16 @@ angular
         label: 'Resource 4'
       }];
 
+      vm.backup = {};
+
+    vm.toggle = function() {
+      if(vm.resources.length == 4) {
+        vm.backup = vm.resources.pop();
+      } else {
+        vm.resources.push(vm.backup);
+      }
+    }
+
     vm.eventDropped = function(event, start, end, resource, fromCalendar) {
 
       if(!fromCalendar && vm.events.indexOf(event) > -1
