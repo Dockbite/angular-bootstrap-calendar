@@ -134,6 +134,10 @@ angular
             event.endsAt = end;
           }
           event.resource = resource;
+          var serviceman = vm.resources.filter(function(obj) {
+            return obj.id == resource;
+          });
+          event.serviceman = serviceman[0].serviceman;
           vm.cellIsOpen = true;
 
         }
