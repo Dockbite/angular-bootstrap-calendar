@@ -1,6 +1,6 @@
 angular
   .module('mwl.calendar.docs')
-  .controller('DraggableExternalEventsCtrl', function(moment, calendarConfig) {
+  .controller('DraggableExternalEventsCtrl', function(moment, calendarConfig, $scope) {
 
     var vm = this;
 
@@ -100,7 +100,39 @@ angular
         label: 'Resource 4'
       }];
 
+      vm.backup = {};
+
+    vm.toggle = function() {
+      if(vm.resources.length == 4) {
+        vm.backup = vm.resources.pop();
+      } else {
+        vm.resources.push(vm.backup);
+      }
+
+      $scope.$broadcast('calendar.refreshView');
+    };
+
+    vm.flip = function() {
+      var a = vm.resources.splice(0,1);
+      var b = vm.resources.splice(0,1);
+      a = a[0];
+      b = b[0];
+      a.id = 1 - a.id;
+      b.id = 1 - b.id;
+      vm.resources.push(a);
+      vm.resources.push(b);
+      vm.resources.sort(function(a,b) {
+        if(a.id < b.id) return -1;
+        if(a.id > b.id) return 1;
+        return 0;
+      });
+      console.log(vm.resources);
+      $scope.$broadcast('calendar.refreshView');
+    };
+
     vm.eventDropped = function(event, start, end, resource, fromCalendar) {
+      /* Function that gets called whenever an event is dropped on
+         the calendar view */
 
       if(!fromCalendar && vm.events.indexOf(event) > -1
           && moment(start).isBetween(moment(event.startsAt).startOf('day'), moment(event.startsAt).endOf('day'))) {
@@ -109,12 +141,18 @@ angular
         return;
       }
 
+      /* Case 1: an event is dragged from the sidebar (external events)
+         into the calendar. It is removed from the list of external events
+         and pushed into the list of events (which are in the calendar) */
       var externalIndex = vm.externalEvents.indexOf(event);
       if (externalIndex > -1 && fromCalendar !== true) {
         vm.externalEvents.splice(externalIndex, 1);
         vm.events.push(event);
       }
 
+      /* Case 2: an event is dragged from the calendar into the sidebar
+         (hence the resource equals undefined). It is removed from the
+         list of events and pushed into the list of external events */
       var internalIndex = vm.events.indexOf(event);
       if (internalIndex > -1 && resource === 'undefined') {
         vm.events.splice(internalIndex, 1);
@@ -134,6 +172,14 @@ angular
             event.endsAt = end;
           }
           event.resource = resource;
+
+          /* Add the id of the serviceman to the event, since the
+             IDs of the resources depend only on the ordering of
+             the columns. */
+          var serviceman = vm.resources.filter(function(obj) {
+            return obj.id == resource;
+          });
+          event.serviceman = serviceman[0].serviceman;
           vm.cellIsOpen = true;
 
         }
