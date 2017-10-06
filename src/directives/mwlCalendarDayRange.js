@@ -31,16 +31,38 @@ angular
 
       var view = [];
       vm.nonAllDayEvents = [];
+
+      /* Filter out events that aren't currently visible because
+         the resource is hidden */
+      var visibleEvents = vm.events.filter(function(event) {
+        for (var idx in vm.resources) {
+          if (vm.resources[idx].serviceman === event.serviceman) {
+            return true;
+          }
+        }
+
+        return false;
+      });
+
+      /* Update the resource IDs, since the resource id corresponding
+         to the serviceman may have changed */
+      for (var idx in visibleEvents) {
+        var correctResource = vm.resources.filter(function(resource) {
+          return resource.serviceman === visibleEvents[idx].serviceman;
+        });
+        visibleEvents[idx].resource = correctResource[0].id;
+      }
+
       vm.dateRange.forEach(function(day, index) {
         view[index] = calendarHelper.getDayView(
-          vm.events,
+          visibleEvents,
           day,
           vm.dayViewStart,
           vm.dayViewEnd,
           vm.dayViewSplit,
           vm.dayViewEventWidth
         );
-  
+
         vm.nonAllDayEvents[index] = view[index].events;
         vm.viewWidth = view[index].width + 62;
       });
