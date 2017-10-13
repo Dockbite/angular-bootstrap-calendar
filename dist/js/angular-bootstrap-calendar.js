@@ -2261,16 +2261,14 @@ angular
     vm.calendarEventTitle = calendarEventTitle;
 
     function refreshView() {
-      // console.log('refresh');
-
       vm.timeHidden = vm.dayViewTimePosition === 'hidden';
       vm.dayViewTimePositionOffset = vm.dayViewTimePosition !== 'default' ? 0 : 60;
 
       vm.dayViewSplit = vm.dayViewSplit || 30;
       vm.dayViewHeight = calendarHelper.getDayViewHeight(
-	vm.dayViewStart,
-	vm.dayViewEnd,
-	vm.dayViewSplit
+      vm.dayViewStart,
+      vm.dayViewEnd,
+      vm.dayViewSplit
       );
 
       vm.dateRange = [];
@@ -2297,7 +2295,7 @@ angular
         return false;
       });
 
-      /* Update the resource IDs, since the resource id corresponding
+      /* Update the resource IDs, since the resource id corresp$scope.$on('calendar.refreshView', refreshView);onding
          to the serviceman may have changed */
       for (var idx in visibleEvents) {
         var correctResource = vm.resources.filter(function(resource) {
@@ -2327,8 +2325,9 @@ angular
       'vm.dayViewStart',
       'vm.dayViewEnd',
       'vm.dayViewSplit',
-      'vm.start',
-      'vm.stop'
+      'vm.viewDateEnd',
+      'vm.viewDateRangeStart',
+      'vm.viewDateRangeEnd',
     ], refreshView);
 
     vm.eventDragComplete = function(event, minuteChunksMoved, resourceChunksMoved) {
