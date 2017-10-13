@@ -2474,7 +2474,11 @@ angular
 
       // set end if event.endsAt is undefined
       if (!event.endsAt) {
-        end = moment(event.startsAt).add(30, 'minutes');
+        if(!event.duration) {          
+          end = moment(event.startsAt).add(30, 'minutes');
+        } else {
+          end = moment(event.startsAt).add(duration, 'minutes');
+        }
       }
 
       if (edge === 'start') {
