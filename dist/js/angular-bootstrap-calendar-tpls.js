@@ -2418,7 +2418,9 @@ angular
     $scope.$watchGroup([
       'vm.dayViewStart',
       'vm.dayViewEnd',
-      'vm.dayViewSplit'
+      'vm.dayViewSplit',
+      'vm.start',
+      'vm.stop'
     ], refreshView);
 
     vm.eventDragComplete = function(event, minuteChunksMoved, resourceChunksMoved) {
