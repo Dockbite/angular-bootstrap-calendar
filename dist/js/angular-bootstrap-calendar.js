@@ -2261,15 +2261,16 @@ angular
     vm.calendarEventTitle = calendarEventTitle;
 
     function refreshView() {
+      // console.log('refresh');
 
       vm.timeHidden = vm.dayViewTimePosition === 'hidden';
       vm.dayViewTimePositionOffset = vm.dayViewTimePosition !== 'default' ? 0 : 60;
 
       vm.dayViewSplit = vm.dayViewSplit || 30;
       vm.dayViewHeight = calendarHelper.getDayViewHeight(
-        vm.dayViewStart,
-        vm.dayViewEnd,
-        vm.dayViewSplit
+	vm.dayViewStart,
+	vm.dayViewEnd,
+	vm.dayViewSplit
       );
 
       vm.dateRange = [];
@@ -2285,6 +2286,7 @@ angular
 
       /* Filter out events that aren't currently visible because
          the resource is hidden */
+      // console.log(3,vm.resources);
       var visibleEvents = vm.events.filter(function(event) {
         for (var idx in vm.resources) {
           if (vm.resources[idx].serviceman === event.serviceman) {
@@ -2335,11 +2337,13 @@ angular
         }
         var newResource = event.resource + Math.round(resourceChunksMoved);
         if (newResource < 0) {
-          newResource = 0;
+          newResource = -1;
         } else if (newResource > vm.resources.length) {
           newResource = vm.resources.length - 1;
         }
       }
+
+      // console.log("New resource: " + newResource);
 
       var newStart = moment(event.startsAt).add(minutesDiff, 'minutes');
       var newEnd = moment(event.endsAt).add(minutesDiff, 'minutes');
