@@ -16,6 +16,13 @@
         </ul>
         <button ng-click="vm.toggle()">toggle</button>
         <button ng-click="vm.flip()">flip</button>
+        <button ng-click="vm.forceupdate()">update</button>
+        <ul>
+          <li><input type="checkbox" ng-model="vm.res[0]" ng-change="vm.updateResources()">Res1</li>
+          <li><input type="checkbox" ng-model="vm.res[1]" ng-change="vm.updateResources()">Res2</li>
+          <li><input type="checkbox" ng-model="vm.res[2]" ng-change="vm.updateResources()">Res3</li>
+          <li><input type="checkbox" ng-model="vm.res[3]" ng-change="vm.updateResources()">Res4</li>
+        </ul>
       </div>
     </div>
     <div class="col-md-9">

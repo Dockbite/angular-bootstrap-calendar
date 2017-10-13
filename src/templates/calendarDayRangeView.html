@@ -31,7 +31,7 @@
       mwl-draggable="dayEvent.event.draggable === true"
       drop-data="{event: dayEvent.event}"
       axis="'xy'"
-      snap-grid="{y: vm.dayViewEventChunkSize || 30, x: 5}"
+      snap-grid="{y: vm.dayViewEventChunkSize || 15, x: 5}"
       on-drag="vm.eventDragged(dayEvent.event, y / 30, x)"
       on-drag-end="vm.eventDragComplete(dayEvent.event, y / 30, x / 150)"
       auto-scroll="vm.draggableAutoScroll"

@@ -4,13 +4,42 @@ angular
 
     var vm = this;
 
-    vm.eventDroppedInList = function(event) {
-      var internalIndex = vm.events.indexOf(event);
-      if (internalIndex > -1) {
-        vm.events.splice(internalIndex, 1);
-        vm.externalEvents.push(event);
-      }
+    vm.res = [];
+    vm.res[0] = vm.res[1] = vm.res[2] = vm.res[3] = true;
+
+    vm.resources = [];
+
+    vm.forceupdate = function() {
+      $scope.$broadcast('calendar.refreshView');
+      // $scope.$apply();
     }
+
+    vm.updateResources = function() {
+      // vm.resources = [];
+      while(vm.resources.length > 0) {
+        vm.resources.pop();
+      }
+
+      var i = 0;
+      for(idx in vm.res) {
+        if(vm.res[idx] == true) {
+          vm.resources.push({id: i, serviceman: 144+idx, label: 'servicemen' + idx});
+          i++;
+        }
+      }
+
+      console.log(2, vm.resources);
+      $scope.$broadcast('calendar.refreshView');
+      // setTimeout(function() {$scope.$broadcast('calendar.refreshView');}, 1);
+    }
+
+    // vm.eventDroppedInList = function(event) {
+    //   var internalIndex = vm.events.indexOf(event);
+    //   if (internalIndex > -1) {
+    //     vm.events.splice(internalIndex, 1);
+    //     vm.externalEvents.push(event);
+    //   }
+    // }
 
     vm.events = [
       {
@@ -82,33 +111,67 @@ angular
     vm.dayViewStart = "09:00";
     vm.dayViewEnd = "14:00";
     vm.cellIsOpen = false;
-    vm.resources = [{
-        id: 0,
-        serviceman: 23232,
-        label: 'Resource 1'
-      }, {
-        id: 1,
-        serviceman: 34444,
-        label: 'Resource 2'
-      }, {
-        id: 2,
-        serviceman: 33222,
-        label: 'Resource 3'
-      }, {
-        id: 3,
-        serviceman: 86544,
-        label: 'Resource 4'
-      }];
+    // vm.resources = [{
+    //     id: 0,
+    //     serviceman: 23232,
+    //     label: 'Resource 1'
+    //   }, {
+    //     id: 1,
+    //     serviceman: 34444,
+    //     label: 'Resource 2'
+    //   }, {
+    //     id: 2,
+    //     serviceman: 33222,
+    //     label: 'Resource 3'
+    //   }, {
+    //     id: 3,
+    //     serviceman: 86544,
+    //     label: 'Resource 4'
+    //   }];
 
       vm.backup = {};
 
     vm.toggle = function() {
-      if(vm.resources.length == 4) {
-        vm.backup = vm.resources.pop();
+      // if(vm.resources.length == 4) {
+      //   vm.backup = vm.resources.splice(0,1)[0];
+      // } else {
+      //   vm.resources.push(vm.backup);
+      // }
+
+      // vm.resources.sort(function(a,b) {
+      //   if(a.id < b.id) return -1;
+      //   if(a.id > b.id) return 1;
+      //   return 0;
+      // });
+
+      // $scope.$broadcast('calendar.refreshView');
+
+      // vm.resources = [];
+      // var i = 0;
+      // for(idx in vm.res) {
+      //   if(vm.res[idx] == true) {
+      //     vm.resources.push({id: i, serviceman: 144+idx, label: 'servicemen' + idx});
+      //   }
+      //   i++;
+      // }
+      var more = false;
+      if(vm.resources.length == 3) {
+        more = true;
       } else {
-        vm.resources.push(vm.backup);
+        vm.resources.pop();        
       }
 
+      vm.resources.pop();
+      vm.resources.pop();
+      vm.resources.pop();
+      vm.resources.push({id: 0, serviceman: 1440, label: 'servicemen' + 0});
+      vm.resources.push({id: 1, serviceman: 1441, label: 'servicemen' + 1});
+      vm.resources.push({id: 2, serviceman: 1442, label: 'servicemen' + 2});
+      if(more == true) {
+        vm.resources.push({id: 3, serviceman: 1443, label: 'servicemen' + 3});      
+      }
+
+      console.log(2, vm.resources);
       $scope.$broadcast('calendar.refreshView');
     };
 
@@ -126,8 +189,9 @@ angular
         if(a.id > b.id) return 1;
         return 0;
       });
-      console.log(vm.resources);
+      console.log(2,vm.resources);
       $scope.$broadcast('calendar.refreshView');
+      setTimeout(function() {$scope.$broadcast('calendar.refreshView')}, 1000);
     };
 
     vm.eventDropped = function(event, start, end, resource, fromCalendar) {
@@ -145,6 +209,8 @@ angular
          into the calendar. It is removed from the list of external events
          and pushed into the list of events (which are in the calendar) */
       var externalIndex = vm.externalEvents.indexOf(event);
+      var internalIndex = vm.events.indexOf(event);
+
       if (externalIndex > -1 && fromCalendar !== true) {
         vm.externalEvents.splice(externalIndex, 1);
         vm.events.push(event);
@@ -153,10 +219,11 @@ angular
       /* Case 2: an event is dragged from the calendar into the sidebar
          (hence the resource equals undefined). It is removed from the
          list of events and pushed into the list of external events */
-      var internalIndex = vm.events.indexOf(event);
-      if (internalIndex > -1 && resource === 'undefined') {
+      if (internalIndex > -1 && resource === -1) {
+        console.log('check');
         vm.events.splice(internalIndex, 1);
         vm.externalEvents.push(event);
+        return;
       }
 
       /* Check if: day in day range and time within dayViewStart and dayViewEnd */
