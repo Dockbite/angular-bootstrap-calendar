@@ -41,6 +41,9 @@
       on-resize-end="vm.eventResizeComplete(dayEvent.event, edge, y / 30)"
       uib-tooltip-html="vm.calendarEventTitle.dayViewTooltip(dayEvent.event) | calendarTrustAsHtml"
       tooltip-append-to-body="true">
+      <div class="content-before" ng-if="dayEvent.event.contentBefore">
+        {{dayEvent.event.contentBefore}}
+      </div>
 
       <span class="cal-hours">
         <span ng-show="dayEvent.top == 0"><span ng-bind="(dayEvent.event.tempStartsAt || dayEvent.event.startsAt) | calendarDate:'day':true"></span>, </span>
@@ -61,6 +64,10 @@
         ng-bind-html="action.label | calendarTrustAsHtml"
         ng-click="action.onClick({calendarEvent: dayEvent.event})">
       </a>
+
+      <div class="content-after" ng-if="dayEvent.event.contentAfter">
+        {{dayEvent.event.contentAfter}}
+      </div>
 
     </div>
 
