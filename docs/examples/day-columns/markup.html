@@ -38,7 +38,9 @@
         day-view-end="{{vm.dayViewEnd}}"
         cell-is-open="vm.cellIsOpen"
         cell-auto-open-disabled="true"
-        on-event-times-changed="vm.eventDropped(calendarEvent, calendarNewEventStart, calendarNewEventEnd, calendarNewResource, fromCalendar)">
+        on-event-times-changed="vm.eventDropped(calendarEvent, calendarNewEventStart, calendarNewEventEnd, calendarNewResource, fromCalendar)"
+        on-event-drag-start="vm.dragStart(calendarEvent)"
+        on-event-drag-stop="vm.dragStop(calendarEvent)">
       </mwl-calendar>
     </div>
   </div>

@@ -144,6 +144,8 @@ angular
         draggableAutoScroll: '=?',
         onEventClick: '&',
         onEventTimesChanged: '&',
+        onEventDragStart: '&',
+        onEventDragStop: '&',
         onTimespanClick: '&',
         onDateRangeSelect: '&?',
         onViewChangeClick: '&',

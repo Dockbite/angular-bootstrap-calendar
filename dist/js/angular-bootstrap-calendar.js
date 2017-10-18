@@ -2068,6 +2068,8 @@ angular
         draggableAutoScroll: '=?',
         onEventClick: '&',
         onEventTimesChanged: '&',
+        onEventDragStart: '&',
+        onEventDragStop: '&',
         onTimespanClick: '&',
         onDateRangeSelect: '&?',
         onViewChangeClick: '&',
@@ -2360,6 +2362,18 @@ angular
       });
     };
 
+    vm.eventDragStart = function(event) {
+      vm.onEventDragStart({
+        calendarEvent: event
+      });
+    };
+
+    vm.eventDragStop = function(event) {
+      vm.onEventDragStop({
+        calendarEvent: event
+      });
+    };
+
     vm.eventDragged = function(event, minuteChunksMoved, resourceChunksMoved) {
       var minutesDiff = minuteChunksMoved * vm.dayViewSplit;
       var tempstart = moment(event.startsAt).add(minutesDiff, 'minutes');
@@ -2422,6 +2436,8 @@ angular
         viewDateRangeEnd: '=',
         onEventClick: '=',
         onEventTimesChanged: '=',
+        onEventDragStart: '=',
+        onEventDragStop: '=',
         onTimespanClick: '=',
         onDateRangeSelect: '=',
         dayViewStart: '=',

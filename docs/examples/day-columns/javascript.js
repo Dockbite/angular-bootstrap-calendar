@@ -194,6 +194,14 @@ angular
       setTimeout(function() {$scope.$broadcast('calendar.refreshView')}, 1000);
     };
 
+    vm.dragStart = function(event) {
+      console.log(1, event);
+    };
+
+    vm.dragStop = function(event) {
+      console.log(2, event);
+    };
+
     vm.eventDropped = function(event, start, end, resource, fromCalendar) {
       /* Function that gets called whenever an event is dropped on
          the calendar view */
