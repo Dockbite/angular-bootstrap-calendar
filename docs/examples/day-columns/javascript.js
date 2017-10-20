@@ -220,6 +220,17 @@ angular
       var internalIndex = vm.events.indexOf(event);
 
       if (externalIndex > -1 && fromCalendar !== true) {
+        /* Check if events overlap */
+        for (var idx = 0; idx < vm.events.length; idx++) {
+          if (vm.events[idx].calendarEventId !== event.calendarEventId && vm.events[idx].resource === resource) {
+            if (moment(start).isBetween(vm.events[idx].startsAt, vm.events[idx].endsAt) ||
+              moment(end).isBetween(vm.events[idx].startsAt, vm.events[idx].endsAt) ||
+              moment(vm.events[idx].startsAt).isBetween(start, end) ||
+              moment(vm.events[idx].endsAt).isBetween(start, end)) {
+                return;
+              }
+          }
+        }
         vm.externalEvents.splice(externalIndex, 1);
         vm.events.push(event);
       }

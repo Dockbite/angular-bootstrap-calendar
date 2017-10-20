@@ -93,12 +93,22 @@ angular
         }
       }
 
-      // console.log("New resource: " + newResource);
-
       var newStart = moment(event.startsAt).add(minutesDiff, 'minutes');
       var newEnd = moment(event.endsAt).add(minutesDiff, 'minutes');
       delete event.tempStartsAt;
       delete event.outsideDay;
+
+      /* Check if events overlap */
+      for (var idx = 0; idx < vm.events.length; idx++) {
+        if (vm.events[idx].calendarEventId !== event.calendarEventId && vm.events[idx].resource === newResource) {
+          if (moment(newStart).isBetween(vm.events[idx].startsAt, vm.events[idx].endsAt) ||
+             moment(newEnd).isBetween(vm.events[idx].startsAt, vm.events[idx].endsAt) ||
+             moment(vm.events[idx].startsAt).isBetween(newStart, newEnd) ||
+             moment(vm.events[idx].endsAt).isBetween(newStart, newEnd)) {
+               return;
+             }
+        }
+      }
 
       vm.onEventTimesChanged({
         calendarEvent: event,
@@ -152,6 +162,18 @@ angular
         end.add(minutesDiff, 'minutes');
       }
       delete event.tempStartsAt;
+
+       /* Check if events overlap */
+       for (var idx = 0; idx < vm.events.length; idx++) {
+        if (vm.events[idx].calendarEventId !== event.calendarEventId && vm.events[idx].resource === event.resource) {
+          if (moment(start).isBetween(vm.events[idx].startsAt, vm.events[idx].endsAt) ||
+             moment(end).isBetween(vm.events[idx].startsAt, vm.events[idx].endsAt) ||
+             moment(vm.events[idx].startsAt).isBetween(start, end) ||
+             moment(vm.events[idx].endsAt).isBetween(start, end)) {
+               return;
+             }
+        }
+      }
 
       vm.onEventTimesChanged({
         calendarEvent: event,
