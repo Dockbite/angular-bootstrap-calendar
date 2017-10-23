@@ -8,6 +8,8 @@ angular
   .controller('MwlCalendarHourListCtrl', function($scope, $document, moment, calendarHelper) {
     var vm = this;
 
+    vm.today = moment().format('YYYY-MM-DD');
+
     // source: http://stackoverflow.com/questions/13382516/getting-scroll-bar-width-using-javascript
     function getScrollbarWidth() {
       var outer = $document[0].createElement('div');

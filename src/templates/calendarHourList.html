@@ -1,3 +1,6 @@
+<div class="pull-left day-event" ng-style="{ top: '-60px', height: '30px', width: 'auto', left: '-2px' }">
+<span class="day-in-week">{{vm.viewDate | date: 'EEEE d MMMM'}}</span><span ng-show="vm.viewDate === vm.today" class="day-is-today">&nbsp; (Vandaag)</span>
+</div>
 <div class="pull-left day-event day-highlight" style="text-align:center" ng-show="vm.resources != undefined" ng-style="{ top: '-30px', height: '30px', width: '70px', left: '-2px' }">
   <span><i class="glyphicon glyphicon-time pull-left" style="margin-left: 20px;margin-top: 5px;"></i></span>
 </div>
