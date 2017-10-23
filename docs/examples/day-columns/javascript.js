@@ -7,48 +7,31 @@ angular
     vm.res = [];
     vm.res[0] = vm.res[1] = vm.res[2] = vm.res[3] = true;
 
-    vm.resources = [
-      {
-      id: 1,
-      serviceman: 1441,
-      label: 'serviceman1'
-      },
-      {
-      id: 2,
-      serviceman: 1442,
-      label: 'serviceman2'
-      },
-      {
-      id: 3,
-      serviceman: 1443,
-      label: 'serviceman3'
-      },
-
-    ];
+    vm.resources = [];
 
     vm.forceupdate = function() {
       $scope.$broadcast('calendar.refreshView');
       // $scope.$apply();
     }
 
-    // vm.updateResources = function() {
-    //   // vm.resources = [];
-    //   while(vm.resources.length > 0) {
-    //     vm.resources.pop();
-    //   }
+    vm.updateResources = function() {
+      // vm.resources = [];
+      while(vm.resources.length > 0) {
+        vm.resources.pop();
+      }
 
-    //   var i = 0;
-    //   for(idx in vm.res) {
-    //     if(vm.res[idx] == true) {
-    //       vm.resources.push({id: i, serviceman: 144+idx, label: 'servicemen' + idx});
-    //       i++;
-    //     }
-    //   }
+      var i = 0;
+      for(idx in vm.res) {
+        if(vm.res[idx] == true) {
+          vm.resources.push({id: i, serviceman: 144+idx, label: 'servicemen' + idx});
+          i++;
+        }
+      }
 
-    //   console.log(2, vm.resources);
-    //   $scope.$broadcast('calendar.refreshView');
-    //   // setTimeout(function() {$scope.$broadcast('calendar.refreshView');}, 1);
-    // }
+      console.log(2, vm.resources);
+      $scope.$broadcast('calendar.refreshView');
+      // setTimeout(function() {$scope.$broadcast('calendar.refreshView');}, 1);
+    }
 
     // vm.eventDroppedInList = function(event) {
     //   var internalIndex = vm.events.indexOf(event);
@@ -122,9 +105,9 @@ angular
     ];
 
     vm.calendarView = 'day-range';
-    vm.viewDate = moment().startOf('week').toDate();
-    vm.viewDateStart = moment().startOf('week').toDate();
-    vm.viewDateEnd =  moment().startOf('week').add(4, 'days').toDate();
+    vm.viewDate = moment().startOf('month').toDate();
+    vm.viewDateStart = moment().startOf('month').toDate();
+    vm.viewDateEnd =  moment().startOf('month').add(4, 'days').toDate();
     vm.dayViewStart = "09:00";
     vm.dayViewEnd = "14:00";
     vm.cellIsOpen = false;
