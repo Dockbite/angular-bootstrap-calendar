@@ -1,13 +1,6 @@
-<div class="pull-left day-event" ng-style="{ top: '-60px', height: '30px', width: 'auto', left: '-2px' }">
+<div class="pull-left day-event" ng-style="{ top: '-30px', height: '30px', width: 'auto', left: '-2px' }">
 <span class="day-in-week">{{vm.viewDate | date: 'EEEE d MMMM'}}</span><span ng-show="vm.viewDate === vm.today" class="day-is-today">&nbsp; (Vandaag)</span>
 </div>
-<div class="pull-left day-event day-highlight" style="text-align:center" ng-show="vm.resources != undefined" ng-style="{ top: '-30px', height: '30px', width: '70px', left: '-2px' }">
-  <span><i class="glyphicon glyphicon-time pull-left" style="margin-left: 20px;margin-top: 5px;"></i></span>
-</div>
-<div class="pull-left day-event day-highlight"
-     style="text-align:center"
-     ng-style="{ top: '-30px', height: '30px', width: '150px', left:($index*150)+60+'px'}"
-     ng-repeat="vm in vm.resources">{{vm.label}}</div>
 <div class="cal-day-panel-hour" ng-style="{width : vm.resources.length > 0 ? (vm.resources.length*150)+60+'px' : '100%'}" >
 
   <div class="cal-day-hour" ng-repeat="hour in vm.hourGrid track by $index">
