@@ -106,8 +106,8 @@ angular
 
     vm.calendarView = 'day-range';
     vm.viewDate = moment().startOf('month').toDate();
-    vm.viewDateStart = moment().startOf('month').toDate();
-    vm.viewDateEnd =  moment().startOf('month').add(4, 'days').toDate();
+    vm.viewDateStart = moment().startOf('isoweek').toDate();
+    vm.viewDateEnd =  moment().startOf('isoweek').add(4, 'days').toDate();
     vm.dayViewStart = "09:00";
     vm.dayViewEnd = "14:00";
     vm.cellIsOpen = false;

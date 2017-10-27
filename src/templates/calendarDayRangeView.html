@@ -1,5 +1,6 @@
-<div class="cal-day-box" style="padding-top:35px" id="calendar" ng-repeat="date in vm.dateRange track by $index">
-  <div class="cal-day-panel clearfix" ng-style="{height: vm.dayViewHeight + 'px', minWidth: vm.viewWidth + 'px'}" style="border-right:0px">
+<div class="cal-day-box" style="padding-top:35px" id="calendar" ng-repeat="date in vm.dateRange track by $index" ng-init="showDay = true">
+  <span class="day-header"><span class="day-in-week"><span class="fa fa-caret-{{showDay ? 'up' : 'down'}}" ng-click="showDay = !showDay"></span> {{date | date: 'EEEE d MMMM'}}</span><span ng-show="date === vm.today" class="day-is-today">&nbsp; (Vandaag)</span></span>
+  <div class="cal-day-panel clearfix" ng-show="showDay" ng-style="{height: vm.dayViewHeight + 'px', minWidth: vm.viewWidth + 'px'}" style="border-right:0px">
 
     <mwl-calendar-hour-list
       day-view-start="vm.dayViewStart"

@@ -1,7 +1,8 @@
-<div class="pull-left day-event" ng-style="{ top: '-30px', height: '30px', width: 'auto', left: '-2px' }">
-<span class="day-in-week">{{vm.viewDate | date: 'EEEE d MMMM'}}</span><span ng-show="vm.viewDate === vm.today" class="day-is-today">&nbsp; (Vandaag)</span>
+<div class="pull-left day-event" ng-init="showDay = true" ng-style="{ top: '-30px', height: '30px', width: 'auto', left: '-2px' }">
+<!-- <span class="day-header"><span class="day-in-week"><span class="fa fa-caret-down" ng-click="showDay = !showDay">{{showDay ? '^' : 'v'}}</span> {{vm.viewDate | date: 'EEEE d MMMM'}}</span><span ng-show="vm.viewDate === vm.today" class="day-is-today">&nbsp; (Vandaag)</span></span> -->
 </div>
-<div class="cal-day-panel-hour" ng-style="{width : vm.resources.length > 0 ? (vm.resources.length*150)+60+'px' : '100%'}" >
+
+<div class="cal-day-panel-hour" ng-show="showDay" ng-style="{width : vm.resources.length > 0 ? (vm.resources.length*150)+60+'px' : '100%'}" >
 
   <div class="cal-day-hour" ng-repeat="hour in vm.hourGrid track by $index">
 

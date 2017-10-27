@@ -8,6 +8,7 @@ angular
 
     var vm = this;
     vm.calendarEventTitle = calendarEventTitle;
+    vm.today = moment().format('YYYY-MM-DD');
 
     function refreshView() {
       vm.timeHidden = vm.dayViewTimePosition === 'hidden';
@@ -21,10 +22,12 @@ angular
       );
 
       vm.dateRange = [];
+      vm.showDateRange = [];
       var startDate = moment(vm.viewDateRangeStart);
       var stopDate = moment(vm.viewDateRangeEnd);
       while (startDate <= stopDate) {
         vm.dateRange.push(moment(startDate).format('YYYY-MM-DD'));
+        vm.showDateRange.push(true);
         startDate = moment(startDate).add(1, 'days');
       }
 
