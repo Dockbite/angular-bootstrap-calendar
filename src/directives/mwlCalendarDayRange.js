@@ -91,7 +91,7 @@ angular
         var newResource = event.resource + Math.round(resourceChunksMoved);
         if (newResource < 0) {
           newResource = -1;
-        } else if (newResource > vm.resources.length) {
+        } else if (newResource > vm.resources.length - 1) {
           newResource = vm.resources.length - 1;
         }
       }
