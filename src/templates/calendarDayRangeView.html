@@ -25,7 +25,7 @@
       ng-class="dayEvent.event.cssClass"
       ng-style="{
         top: dayEvent.top - 1 + 'px',
-        left: (dayEvent.event.resource * 150) +  vm.dayViewTimePositionOffset + 'px',
+        left: (dayEvent.event.resource * 150) + (dayEvent.event.resource * 10) +  vm.dayViewTimePositionOffset + 'px',
         height: dayEvent.height + 'px',
         width: dayEvent.width + 'px',
         backgroundColor: dayEvent.event.color.secondary,
@@ -78,4 +78,3 @@
   </div>
 
 </div>
-  
