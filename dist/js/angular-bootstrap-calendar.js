@@ -2461,7 +2461,7 @@ angular
         viewDateRangeStart: '=',
         viewDateRangeEnd: '=',
         onEventClick: '=',
-        onEventLock: '=',
+        onEventLock: '&',
         onEventTimesChanged: '=',
         onEventDragStart: '=',
         onEventDragStop: '=',
