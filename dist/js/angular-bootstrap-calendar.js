@@ -2067,6 +2067,7 @@ angular
         customTemplateUrls: '=?',
         draggableAutoScroll: '=?',
         onEventClick: '&',
+        onEventLock: '&',
         onEventTimesChanged: '&',
         onEventDragStart: '&',
         onEventDragStop: '&',
